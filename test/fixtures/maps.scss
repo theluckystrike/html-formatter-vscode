@@ -1,0 +1,11 @@
+$theme: (
+  "primary": $blue,
+  "secondary": #{$gray-600},
+);
+
+.alert {
+  margin-bottom: 1rem; // the space below
+    @each $name, $value in $theme {
+  &-#{$name} { color: $value; }
+  }
+}

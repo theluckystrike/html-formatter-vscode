@@ -1,0 +1,312 @@
+{
+  "name": "zovo-html-formatter",
+  "displayName": "HTML Formatter & CSS Formatter",
+  "description": "HTML formatter and CSS formatter for VS Code: format HTML, CSS, SCSS and LESS, and the style and script blocks inside HTML, with zero config. Reads .editorconfig, keeps <pre> and inline tags intact, never reorders attributes. Works offline.",
+  "version": "0.1.0",
+  "publisher": "zovo",
+  "license": "MIT",
+  "icon": "icon.png",
+  "galleryBanner": {
+    "color": "#1B2A4A",
+    "theme": "dark"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/theluckystrike/html-formatter-vscode"
+  },
+  "bugs": {
+    "url": "https://github.com/theluckystrike/html-formatter-vscode/issues"
+  },
+  "homepage": "https://github.com/theluckystrike/html-formatter-vscode#readme",
+  "engines": {
+    "vscode": "^1.75.0"
+  },
+  "categories": [
+    "Formatters",
+    "Linters",
+    "Other"
+  ],
+  "keywords": [
+    "html formatter",
+    "css formatter",
+    "beautify",
+    "format on save",
+    "scss"
+  ],
+  "main": "./src/extension.js",
+  "activationEvents": [
+    "onLanguage:html",
+    "onLanguage:css",
+    "onLanguage:scss",
+    "onLanguage:less"
+  ],
+  "capabilities": {
+    "virtualWorkspaces": true,
+    "untrustedWorkspaces": {
+      "supported": true
+    }
+  },
+  "contributes": {
+    "commands": [
+      {
+        "command": "zovoHtmlFormat.format",
+        "title": "Format with HTML Formatter",
+        "category": "HTML Formatter"
+      },
+      {
+        "command": "zovoHtmlFormat.setDefault",
+        "title": "Use as Default Formatter for HTML, CSS, SCSS and LESS",
+        "category": "HTML Formatter"
+      },
+      {
+        "command": "zovoHtmlFormat.formatFolder",
+        "title": "Format Folder with Diff Preview (Pro)",
+        "category": "HTML Formatter"
+      },
+      {
+        "command": "zovoHtmlFormat.minify",
+        "title": "Minify HTML and CSS (Pro)",
+        "category": "HTML Formatter"
+      },
+      {
+        "command": "zovoHtmlFormat.lint",
+        "title": "HTML Lint Report (Pro)",
+        "category": "HTML Formatter"
+      },
+      {
+        "command": "zovoHtmlFormat.zovoPro.formatFolder",
+        "title": "Zovo Pro: Format folder with diff preview"
+      },
+      {
+        "command": "zovoHtmlFormat.zovoPro.minify",
+        "title": "Zovo Pro: Minify HTML and CSS"
+      },
+      {
+        "command": "zovoHtmlFormat.zovoPro.lint",
+        "title": "Zovo Pro: HTML lint report"
+      },
+      {
+        "command": "zovoHtmlFormat.supportDeveloper",
+        "title": "Support the developer",
+        "category": "HTML Formatter"
+      },
+      {
+        "command": "zovoHtmlFormat.moreViewers",
+        "title": "More free tools",
+        "category": "HTML Formatter"
+      },
+      {
+        "command": "zovoHtmlFormat.getPro",
+        "title": "Get Zovo Pro (USD 19 once, all 22 Zovo extensions)",
+        "category": "Zovo Pro"
+      },
+      {
+        "command": "zovoHtmlFormat.payWithPayPal",
+        "title": "Pay for Zovo Pro with PayPal (USD 19, team of 5 USD 59)",
+        "category": "Zovo Pro"
+      },
+      {
+        "command": "zovoHtmlFormat.unlockWithSponsors",
+        "title": "I already paid: unlock with GitHub Sponsors",
+        "category": "Zovo Pro"
+      },
+      {
+        "command": "zovoHtmlFormat.enterLicenseKey",
+        "title": "Enter Zovo Pro license key",
+        "category": "Zovo Pro"
+      },
+      {
+        "command": "zovoHtmlFormat.removeLicense",
+        "title": "Remove Zovo Pro from this editor",
+        "category": "Zovo Pro"
+      },
+      {
+        "command": "zovoHtmlFormat.payByCard",
+        "title": "Pay for Zovo Pro by card (USD 19)",
+        "category": "Zovo Pro"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "zovoHtmlFormat.format",
+          "when": "editorLangId =~ /^(html|css|scss|less)$/",
+          "group": "1_modification@9"
+        },
+        {
+          "command": "zovoHtmlFormat.minify",
+          "when": "editorLangId =~ /^(html|css)$/ && config.zovoHtmlFormat.showProTools",
+          "group": "zovoPro@1"
+        },
+        {
+          "command": "zovoHtmlFormat.lint",
+          "when": "editorLangId == html && config.zovoHtmlFormat.showProTools",
+          "group": "zovoPro@2"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "zovoHtmlFormat.zovoPro.formatFolder",
+          "when": "explorerResourceIsFolder && config.zovoHtmlFormat.showProTools",
+          "group": "zovoPro@1"
+        },
+        {
+          "command": "zovoHtmlFormat.zovoPro.minify",
+          "when": "(explorerResourceIsFolder || resourceExtname =~ /^\\.(html?|css)$/i) && config.zovoHtmlFormat.showProTools",
+          "group": "zovoPro@2"
+        },
+        {
+          "command": "zovoHtmlFormat.zovoPro.lint",
+          "when": "(explorerResourceIsFolder || resourceExtname =~ /^\\.html?$/i) && config.zovoHtmlFormat.showProTools",
+          "group": "zovoPro@3"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "zovoHtmlFormat.zovoPro.formatFolder",
+          "when": "false"
+        },
+        {
+          "command": "zovoHtmlFormat.zovoPro.minify",
+          "when": "false"
+        },
+        {
+          "command": "zovoHtmlFormat.zovoPro.lint",
+          "when": "false"
+        },
+        {
+          "command": "zovoHtmlFormat.format",
+          "when": "editorLangId =~ /^(html|css|scss|less)$/"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "HTML Formatter & CSS Formatter",
+      "properties": {
+        "zovoHtmlFormat.formatOnSave": {
+          "type": "boolean",
+          "default": false,
+          "markdownDescription": "Format HTML, CSS, SCSS and LESS with this formatter when you save, even when another formatter is the default. Off: use VS Code's `editor.formatOnSave` with this formatter as the default (command \"Use as Default Formatter\")."
+        },
+        "zovoHtmlFormat.useEditorConfig": {
+          "type": "boolean",
+          "default": true,
+          "description": "Read indent_style, indent_size, end_of_line, insert_final_newline and max_line_length from .editorconfig files."
+        },
+        "zovoHtmlFormat.wrapLineLength": {
+          "type": "number",
+          "default": 0,
+          "minimum": 0,
+          "description": "Wrap lines longer than this. 0: no wrapping, unless .editorconfig sets max_line_length."
+        },
+        "zovoHtmlFormat.wrapAttributes": {
+          "type": "string",
+          "enum": [
+            "auto",
+            "force",
+            "force-aligned",
+            "force-expand-multiline",
+            "aligned-multiple",
+            "preserve",
+            "preserve-aligned"
+          ],
+          "default": "auto",
+          "description": "How HTML attributes wrap when a tag is longer than the wrap length."
+        },
+        "zovoHtmlFormat.indentInnerHtml": {
+          "type": "string",
+          "enum": [
+            "auto",
+            "true",
+            "false"
+          ],
+          "default": "auto",
+          "description": "Indent <head> and <body> inside <html>. auto: keep the style the file already uses."
+        },
+        "zovoHtmlFormat.maxPreserveNewlines": {
+          "type": "number",
+          "default": 2,
+          "minimum": 0,
+          "description": "Keep at most this many line breaks in a row (2 keeps one blank line)."
+        },
+        "zovoHtmlFormat.newlineBetweenRules": {
+          "type": "boolean",
+          "default": false,
+          "description": "Add a blank line between CSS rules. Off: keep the blank lines the file has."
+        },
+        "zovoHtmlFormat.selectorSeparatorNewline": {
+          "type": "boolean",
+          "default": false,
+          "description": "Put each selector of a list (a, b, c) on its own line."
+        },
+        "zovoHtmlFormat.spaceAroundCombinator": {
+          "type": "boolean",
+          "default": true,
+          "description": "Spaces around CSS combinators: a > b, a + b, a ~ b."
+        },
+        "zovoHtmlFormat.unformatted": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "description": "HTML tags whose content and tags are left exactly as written."
+        },
+        "zovoHtmlFormat.contentUnformatted": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "description": "HTML tags whose inner content is left as written, besides pre and textarea."
+        },
+        "zovoHtmlFormat.exclude": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "**/node_modules/**",
+            "**/.git/**",
+            "**/*.min.*",
+            "**/dist/**",
+            "**/vendor/**"
+          ],
+          "description": "Files the Pro folder tools skip."
+        },
+        "zovoHtmlFormat.maxFiles": {
+          "type": "number",
+          "default": 2000,
+          "minimum": 10,
+          "description": "The Pro folder tools look at most at this many files."
+        },
+        "zovoHtmlFormat.minifyOutDir": {
+          "type": "string",
+          "default": "",
+          "description": "Folder for minified copies, relative to the folder you minify. Empty: next to each file as name.min.html or name.min.css."
+        },
+        "zovoHtmlFormat.showProTools": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show the Zovo Pro tools in the editor and Explorer right-click menus. Everything free stays visible."
+        },
+        "zovoHtmlFormat.askForRating": {
+          "type": "boolean",
+          "default": true,
+          "description": "Ask once for a Marketplace rating after the extension has been useful on two occasions at least 30 minutes apart. Never on startup, never after an error. Nothing is sent anywhere."
+        },
+        "zovoHtmlFormat.showSupportLinks": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show More free tools and Support the developer in the command palette."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "test": "node scripts/test.js"
+  },
+  "sponsor": {
+    "url": "https://github.com/sponsors/theluckystrike/sponsorships?tier_id=679878"
+  }
+}

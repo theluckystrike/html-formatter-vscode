@@ -1,0 +1,8 @@
+test/**
+scripts/**
+.github/**
+.git/**
+icon.svg
+**/*.map
+node_modules/**
+*.vsix
